@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AmStInter.Application.Orders.Queries.GetInProgressOrders
 {
-    public class GetInProgressOrdersQueryHandler : IRequestHandler<GetInProgressOrdersQuery, IEnumerable<OrderVM>>
+    public class GetInProgressOrdersQueryHandler : IRequestHandler<GetInProgressOrdersQuery, IEnumerable<InProgressOrderVM>>
     {
         private readonly IDataSource _dataSource;
 
@@ -18,10 +18,10 @@ namespace AmStInter.Application.Orders.Queries.GetInProgressOrders
             _dataSource = dataSource;
         }
 
-        public async Task<IEnumerable<OrderVM>> Handle(GetInProgressOrdersQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<InProgressOrderVM>> Handle(GetInProgressOrdersQuery request, CancellationToken cancellationToken)
         {
             var orders = await _dataSource.GetInProgressOrdersAsync();
-            return orders.Select(x => new OrderVM(x));
+            return orders.Select(x => new InProgressOrderVM(x));
         }
     }
 }

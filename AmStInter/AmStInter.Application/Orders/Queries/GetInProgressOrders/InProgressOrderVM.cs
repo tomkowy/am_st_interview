@@ -3,7 +3,7 @@ using System;
 
 namespace AmStInter.Application.Orders.Queries.GetInProgressOrders
 {
-    public class OrderVM
+    public class InProgressOrderVM
     {
         public int Id { get; set; }
         public int ChannelId { get; set; }
@@ -12,7 +12,7 @@ namespace AmStInter.Application.Orders.Queries.GetInProgressOrders
         public DateTime CreatedAt { get; set; }
         public decimal TotalInclVat { get; set; }
 
-        public OrderVM(Order order)
+        public InProgressOrderVM(Order order)
         {
             Id = order.Id;
             ChannelId = order.ChannelId;
