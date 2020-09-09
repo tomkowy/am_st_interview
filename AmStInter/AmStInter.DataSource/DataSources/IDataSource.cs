@@ -7,5 +7,6 @@ namespace AmStInter.DataSource.DataSources
     public interface IDataSource
     {
         Task<IEnumerable<Order>> GetInProgressOrdersAsync();
+        Task<IEnumerable<Product>> GetProductsAsync();
     }
 }

@@ -28,5 +28,15 @@ namespace AmStInter.DataSource.Tests.DataSources
 
             Assert.All(orders, x => Assert.Equal("IN_PROGRESS", x.Status));
         }
+
+        [Fact]
+        public async Task Should_GetProductsFromChannelEngine()
+        {
+            var dataSource = new ChannelEngineDataSource(ApiUrl, ApiKey);
+
+            var products = await dataSource.GetProductsAsync();
+
+            Assert.NotEmpty(products);
+        }
     }
 }

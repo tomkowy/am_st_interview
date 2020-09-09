@@ -25,5 +25,13 @@ namespace AmStInter.DataSource.DataSources
             var contentOrder = JsonConvert.DeserializeObject<OrderContent>(json);
             return contentOrder.Content;
         }
+
+        public async Task<IEnumerable<Product>> GetProductsAsync()
+        {
+            var response = await _httpClient.GetAsync($"{_apiUrl}products?apikey={_apiKey}");
+            var json = await response.Content.ReadAsStringAsync();
+            var contentProduct = JsonConvert.DeserializeObject<ProductContent>(json);
+            return contentProduct.Content;
+        }
     }
 }
