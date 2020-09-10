@@ -1,4 +1,6 @@
 using AmStInter.DataSource.DataSources;
+using AmStInter.DataSource.Exceptions;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -37,6 +39,28 @@ namespace AmStInter.DataSource.Tests.DataSources
             var products = await dataSource.GetProductsAsync();
 
             Assert.NotEmpty(products);
+        }
+
+        [Fact]
+        public async Task Should_UpdateProductStockInChannelEngine()
+        {
+            var dataSource = new ChannelEngineDataSource(ApiUrl, ApiKey);
+            var merchantNo = "001201";
+            var value = 10;
+
+            await dataSource.UpdateProductStock(merchantNo, value);
+        }
+
+        [Fact]
+        public void Should_ThrowExcepion_When_UpdateProductStockDoesNotExistInChannelEngine()
+        {
+            var dataSource = new ChannelEngineDataSource(ApiUrl, ApiKey);
+            var merchantNo = "";
+            var value = 10;
+
+            async Task action() => await dataSource.UpdateProductStock(merchantNo, value);
+
+            Assert.ThrowsAsync<StockUpdateException>(action);
         }
     }
 }

@@ -8,5 +8,6 @@ namespace AmStInter.DataSource.DataSources
     {
         Task<IEnumerable<Order>> GetInProgressOrdersAsync();
         Task<IEnumerable<Product>> GetProductsAsync();
+        Task UpdateProductStock(string merchantNo, int value);
     }
 }

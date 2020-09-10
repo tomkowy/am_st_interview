@@ -1,4 +1,6 @@
-﻿using AmStInter.DataSource.Models;
+﻿using AmStInter.DataSource.Exceptions;
+using AmStInter.DataSource.Models;
+using AmStInter.DataSource.Models.Requests;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -32,6 +34,20 @@ namespace AmStInter.DataSource.DataSources
             var json = await response.Content.ReadAsStringAsync();
             var contentProduct = JsonConvert.DeserializeObject<ProductContent>(json);
             return contentProduct.Content;
+        }
+
+        public async Task UpdateProductStock(string merchantNo, int value)
+        {
+            var body = new PutBody<int>(value, "Stock", "replace");
+            var httpContent = new StringContent(body.ToHttpBody());
+            var response = await _httpClient.PatchAsync($"{_apiUrl}products/{merchantNo}?apikey={_apiKey}", httpContent);
+            var json = await response.Content.ReadAsStringAsync();
+            var contentProduct = JsonConvert.DeserializeObject<ResponsBody>(json);
+
+            if (!contentProduct.Success)
+            {
+                throw new StockUpdateException(merchantNo);
+            }
         }
     }
 }
