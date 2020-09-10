@@ -5,12 +5,14 @@
         public string Name { get; set; }
         public string EAN { get; set; }
         public int TotalQuantity { get; set; }
+        public string MerchantProductNo { get; set; }
 
-        public TopSoldProductVM(string name, string eAN, int totalQuantity)
+        public TopSoldProductVM(string name, string eAN, int totalQuantity, string merchantProductNo)
         {
             Name = name;
             EAN = eAN;
             TotalQuantity = totalQuantity;
+            MerchantProductNo = merchantProductNo;
         }
     }
 }

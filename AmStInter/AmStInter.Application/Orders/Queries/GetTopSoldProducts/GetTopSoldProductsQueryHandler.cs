@@ -25,7 +25,7 @@ namespace AmStInter.Application.Orders.Queries.GetTopSoldProducts
             var allProducts = await _dataSource.GetProductsAsync();
 
             var productsVM = products.Join(allProducts, prod => prod.MerchantProductNo, allProd => allProd.MerchantProductNo,
-                (x, y) => new TopSoldProductVM(y.Name, y.EAN, x.Quantity));
+                (x, y) => new TopSoldProductVM(y.Name, y.EAN, x.Quantity, x.MerchantProductNo));
 
             return productsVM;
         }
