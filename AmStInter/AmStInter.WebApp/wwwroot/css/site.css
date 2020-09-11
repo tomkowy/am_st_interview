@@ -181,3 +181,11 @@ app {
         display: block;
     }
 }
+
+.update-visible {
+    display: block;
+}
+
+.update-hidden {
+    display: none;
+}

@@ -1,8 +1,8 @@
-﻿using AmStInter.Application.Orders.Commands.UpdateStock;
+﻿using AmStInter.Application.Orders.Commands;
+using AmStInter.Application.Orders.Commands.UpdateStock;
 using AmStInter.Application.Orders.Queries.GetInProgressOrders;
 using AmStInter.Application.Orders.Queries.GetTopSoldProducts;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -53,7 +53,15 @@ namespace AmStInter.ConsoleApp
         {
             Console.WriteLine("Type merchant product to update:");
             var merchantNumber = Console.ReadLine();
-            await mediator.Send(new UpdateStockCommand(merchantNumber));
+            try
+            {
+                await mediator.Send(new UpdateStockCommand(merchantNumber));
+            }
+            catch (UpdatedMerchantProductNoDoesNotExistException)
+            {
+                Console.WriteLine("Product not exist!");
+                return;
+            }
 
             Console.WriteLine("Product updated!");
         }

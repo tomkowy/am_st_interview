@@ -2,6 +2,7 @@
 
 @using AmStInter.WebApp.Data
 @inject OrdersService OrrdersService
+@inject IJSRuntime JsRuntime;
 
 <h1>Orders</h1>
 
@@ -59,6 +60,9 @@ else
     <p>
         Merchant Product Number <input @bind="merchantNumber" />
         <button @onclick="@UpdateProductStock">Update</button>
+
+        <a class="@updateSuccesClass">Product updated!</a>
+        <a class="@updateErrorClass">Product not exist!</a>
     </p>
 }
 
@@ -66,15 +70,35 @@ else
     private IEnumerable<InProgressOrderVM> inProgressOrders;
     private IEnumerable<TopSoldProductVM> topSoldProduct;
     private string merchantNumber;
+    private bool? success = null;
+    private string hiddenClass = "update-hidden";
+    private string visibleClass = "update-visible";
+    private string updateSuccesClass;
+    private string updateErrorClass;
 
     protected override async Task OnInitializedAsync()
     {
+        updateSuccesClass = hiddenClass;
+        updateErrorClass = hiddenClass;
+
         inProgressOrders = await OrrdersService.GetOrders();
         topSoldProduct = await OrrdersService.GetTopSoldProducts();
     }
 
     private async Task UpdateProductStock()
     {
-        await OrrdersService.UpdateProductStock(merchantNumber);
+        var success = await OrrdersService.UpdateProductStock(merchantNumber);
+
+        if (success)
+        {
+            updateSuccesClass = visibleClass;
+            updateErrorClass = hiddenClass;
+        }
+        else
+        {
+            updateErrorClass = visibleClass;
+            updateSuccesClass = hiddenClass;
+        }
+
     }
 }

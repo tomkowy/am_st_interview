@@ -1,4 +1,5 @@
-﻿using AmStInter.Application.Orders.Commands.UpdateStock;
+﻿using AmStInter.Application.Orders.Commands;
+using AmStInter.Application.Orders.Commands.UpdateStock;
 using AmStInter.Application.Orders.Queries.GetInProgressOrders;
 using AmStInter.Application.Orders.Queries.GetTopSoldProducts;
 using MediatR;
@@ -28,9 +29,17 @@ namespace AmStInter.WebApp.Data
             return products;
         }
 
-        public async Task UpdateProductStock(string merchantNumber)
+        public async Task<bool> UpdateProductStock(string merchantNumber)
         {
-            await _mediator.Send(new UpdateStockCommand(merchantNumber));
+            try
+            {
+                await _mediator.Send(new UpdateStockCommand(merchantNumber));
+                return true;
+            }
+            catch (UpdatedMerchantProductNoDoesNotExistException)
+            {
+                return false;
+            }
         }
     }
 }
