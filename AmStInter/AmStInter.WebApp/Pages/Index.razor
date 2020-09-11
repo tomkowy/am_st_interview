@@ -1,0 +1,80 @@
+﻿@page "/"
+
+@using AmStInter.WebApp.Data
+@inject OrdersService OrrdersService
+
+<h1>Orders</h1>
+
+@if (inProgressOrders == null || topSoldProduct == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h4>In progres orders</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Channel Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in inProgressOrders)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.Status</td>
+                    <td>@order.ChannelName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>Top 5 products</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Total Quantity</th>
+                <th>EAN</th>
+                <th>Merchant Product No</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in topSoldProduct)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.TotalQuantity</td>
+                    <td>@product.EAN</td>
+                    <td>@product.MerchantProductNo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>Type merchant product to update</h4>
+    <p>
+        Merchant Product Number <input @bind="merchantNumber" />
+        <button @onclick="@UpdateProductStock">Update</button>
+    </p>
+}
+
+@code {
+    private IEnumerable<InProgressOrderVM> inProgressOrders;
+    private IEnumerable<TopSoldProductVM> topSoldProduct;
+    private string merchantNumber;
+
+    protected override async Task OnInitializedAsync()
+    {
+        inProgressOrders = await OrrdersService.GetOrders();
+        topSoldProduct = await OrrdersService.GetTopSoldProducts();
+    }
+
+    private async Task UpdateProductStock()
+    {
+        await OrrdersService.UpdateProductStock(merchantNumber);
+    }
+}

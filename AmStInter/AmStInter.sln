@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmStInter.Application.Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{B7431FF7-F83B-49D8-A00B-1FC4B1268062}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmStInter.ConsoleApp", "AmStInter.ConsoleApp\AmStInter.ConsoleApp.csproj", "{4F016B37-7E76-430B-B131-FFE685E7EBFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmStInter.ConsoleApp", "AmStInter.ConsoleApp\AmStInter.ConsoleApp.csproj", "{4F016B37-7E76-430B-B131-FFE685E7EBFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmStInter.WebApp", "AmStInter.WebApp\AmStInter.WebApp.csproj", "{36173063-168D-49B5-AC45-753E57E3A625}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{4F016B37-7E76-430B-B131-FFE685E7EBFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F016B37-7E76-430B-B131-FFE685E7EBFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F016B37-7E76-430B-B131-FFE685E7EBFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36173063-168D-49B5-AC45-753E57E3A625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36173063-168D-49B5-AC45-753E57E3A625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36173063-168D-49B5-AC45-753E57E3A625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36173063-168D-49B5-AC45-753E57E3A625}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{13C9D796-3D4E-4E71-8641-CB0543D56B07} = {949DF28F-EDA4-46A6-A844-CB13307E329F}
 		{0727FB5D-D44C-4B5C-95A2-CBC21B296F9F} = {0CCBB8D4-BC02-4C25-974E-84C759654B48}
 		{4F016B37-7E76-430B-B131-FFE685E7EBFE} = {B7431FF7-F83B-49D8-A00B-1FC4B1268062}
+		{36173063-168D-49B5-AC45-753E57E3A625} = {B7431FF7-F83B-49D8-A00B-1FC4B1268062}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D9D4B0F-52EA-42A2-9F96-340386411BB9}
