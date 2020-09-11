@@ -18,9 +18,25 @@ namespace AmStInter.Application.Orders.Services
         public async Task<IEnumerable<Line>> GetOrderTopSoldProducts()
         {
             var orders = await _dataSource.GetInProgressOrdersAsync();
-            //I added additional ordering by MerchantProductNo for the situation when 5th and 6th product have the same quantity
-            var products = orders.SelectMany(x => x.Lines).OrderByDescending(x => x.Quantity).ThenBy(x => x.MerchantProductNo).Take(5);
+            var products = orders.SelectMany(x => x.Lines).GroupBy(x => x.MerchantProductNo).
+                Select(x => CreateLine(x))
+                .OrderByDescending(x => x.Quantity)
+                //I added additional ordering by MerchantProductNo for the situation when 5th and 6th product have the same quantity
+                .ThenBy(x => x.MerchantProductNo).Take(5);
             return products;
+        }
+
+        private Line CreateLine(IGrouping<string, Line> groupedLine)
+        {
+            return new Line
+            {
+                Description = groupedLine.First().Description,
+                LineTotalInclVat = groupedLine.Sum(y => y.LineTotalInclVat),
+                MerchantProductNo = groupedLine.Key,
+                Quantity = groupedLine.Sum(y => y.Quantity),
+                Status = groupedLine.First().Status,
+                UnitPriceInclVat = groupedLine.First().UnitPriceInclVat
+            };
         }
     }
 }

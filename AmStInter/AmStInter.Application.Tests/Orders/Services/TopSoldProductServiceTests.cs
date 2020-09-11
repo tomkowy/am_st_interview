@@ -129,5 +129,22 @@ namespace AmStInter.Application.Tests.Orders.Services
                 x => Assert.Equal(no1, x.MerchantProductNo)
                 );
         }
+
+        [Theory]
+        [InlineAutoData]
+        public async Task Should_ReturnUniqueMerchantNumbers(string no1, string no2, string no3, string no4)
+        {
+            dataSourceMock.GetInProgressOrdersAsyncMock(OrderFactory.CreateOrders(
+                OrderFactory.CreateOrdersWithLines(LineFactory.CreateLine(no1, 3)),
+                OrderFactory.CreateOrdersWithLines(LineFactory.CreateLine(no2, 3), LineFactory.CreateLine(no3, 4)),
+                OrderFactory.CreateOrdersWithLines(LineFactory.CreateLine(no1, 10)),
+                OrderFactory.CreateOrdersWithLines(LineFactory.CreateLine(no4, 5), LineFactory.CreateLine(no3, 8)))
+                );
+            var topSoldProductService = new TopSoldProductService(dataSourceMock.Object);
+
+            var products = await topSoldProductService.GetOrderTopSoldProducts();
+
+            Assert.Equal(products.Select(x => x.MerchantProductNo), products.Select(x => x.MerchantProductNo).Distinct());
+        }
     }
 }
